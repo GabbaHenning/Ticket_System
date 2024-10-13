@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        .hidden { display: none; }
+        .submenu { margin-top: 0; padding-left: 20px; }
+        .button { 
+            margin: 15px 0; 
+            cursor: pointer; 
+            display: block; 
+            width: 300px; 
+            height: 60px; 
+            font-size: 20px; 
+            background-color: #AF2B1E; /* RAL3000 */
+            color: white;
+        }
+        .button.active { 
+            background-color:  	#008000; /* Grün */
+            color: black;
+        }
+    </style>
+    <script>
+        function toggleSubmenu(id) {
+            resetForms();
+            var submenus = document.querySelectorAll('.submenu');
+            submenus.forEach(function(submenu) {
+                if (submenu.id !== id) {
+                    submenu.classList.add('hidden');
+                    var buttons = submenu.previousElementSibling;
+                    if(buttons) buttons.classList.remove('active');
+                }
+            });
+
+            var submenu = document.getElementById(id);
+            submenu.classList.toggle('hidden');
+            var button = document.querySelector('button[onclick="toggleSubmenu(\'' + id + '\')"]');
+            button.classList.toggle('active');
+        }
+
+        function showContent(id) {
+            resetForms();
+            var sections = document.querySelectorAll('.content-section');
+            sections.forEach(function(section) {
+                section.classList.add('hidden');
+            });
+            var content = document.getElementById(id);
+            content.classList.remove('hidden');
+        }
+
+        function resetForms() {
+            var inputs = document.querySelectorAll('input');
+            inputs.forEach(function(input) {
+                input.value = '';
+            });
+
+            var sections = document.querySelectorAll('.content-section');
+            sections.forEach(function(section) {
+                section.classList.add('hidden');
+            });
+        }
+
+        function submitForm() {
+            var name = document.getElementById('nameField').value;
+            alert("Name gesendet: " + name);
+            
+            var xhr = new XMLHttpRequest();
+            xhr.open("POST", "YOUR_SERVER_ENDPOINT", true);
+            xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+            xhr.send(JSON.stringify({name: name}));
+        }
+
+        function submitFunctionForm() {
+            var newFunction = document.getElementById('functionField').value;
+            alert("Funktion gesendet: " + newFunction);
+            
+            var xhr = new XMLHttpRequest();
+            xhr.open("POST", "YOUR_SERVER_ENDPOINT", true);
+            xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+            xhr.send(JSON.stringify({newFunction: newFunction}));
+        }
+
+        function submitGroupForm() {
+            var newGroup = document.getElementById('groupField').value;
+            alert("Alarmgruppe gesendet: " + newGroup);
+            
+            var xhr = new XMLHttpRequest();
+            xhr.open("POST", "YOUR_SERVER_ENDPOINT", true);
+            xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+            xhr.send(JSON.stringify({newGroup: newGroup}));
+        }
+
+        function submitEmailForm() {
+            var newEmail = document.getElementById('emailField').value;
+            alert("Email gesendet: " + newEmail);
+            
+            var xhr = new XMLHttpRequest();
+            xhr.open("POST", "YOUR_SERVER_ENDPOINT", true);
+            xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+            xhr.send(JSON.stringify({newEmail: newEmail}));
+        }
+
+        function submitPhoneForm() {
+            var newPhone = document.getElementById('phoneField').value;
+            alert("Handynummer gesendet: " + newPhone);
+            
+            var xhr = new XMLHttpRequest();
+            xhr.open("POST", "YOUR_SERVER_ENDPOINT", true);
+            xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+            xhr.send(JSON.stringify({newPhone: newPhone}));
+        }
+
+        function submitMailboxForm() {
+            var newMailbox = document.getElementById('mailboxField').value;
+            alert("Postfach gesendet: " + newMailbox);
+            
+            var xhr = new XMLHttpRequest();
+            xhr.open("POST", "YOUR_SERVER_ENDPOINT", true);
+            xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+            xhr.send(JSON.stringify({newMailbox: newMailbox}));
+        }
+
+        function submitDistributionForm() {
+            var distributionChange = document.getElementById('distributionField').value;
+            alert("Verteileränderung gesendet: " + distributionChange);
+            
+            var xhr = new XMLHttpRequest();
+            xhr.open("POST", "YOUR_SERVER_ENDPOINT", true);
+            xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+            xhr.send(JSON.stringify({distributionChange: distributionChange}));
+        }
+
+        function submitProblemForm() {
+            var problemDescription = document.getElementById('problemField').value;
+            alert("Problem gesendet: " + problemDescription);
+            
+            var xhr = new XMLHttpRequest();
+            xhr.open("POST", "YOUR_SERVER_ENDPOINT", true);
+            xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+            xhr.send(JSON.stringify({problemDescription: problemDescription}));
+        }
+    </script>
+<body style="background-color: #808080; color: white; display: flex; justify-content: center; align-items: center; flex-direction: column;">
+    <header>
+        <img src="https://wiki.genealogy.net/images//6/66/Ortswappen-Bodenburg.jpg" alt="Wappen von Bodenburg" style="height: 100px; margin-bottom: 20px;">
+        <h2 style="color: #FFF;">Startseite</h2>
+        <p style="color: #FFF;">Willkommen!</p>
+    </header>
+    <div id="home">
+        <button class="button" onclick="toggleSubmenu('alamos-submenu')">Alamos</button>
+        <div id="alamos-submenu" class="hidden submenu">
+            <button class="button" onclick="showContent('alamos-option1')">keine Alarmierung</button>
+            <button class="button" onclick="showContent('alamos-option2')">änderung der Funktion</button>
+            <button class="button" onclick="showContent('alamos-option3')">änderung der Alarmgruppe</button>
+        </div>
+
+        <button class="button" onclick="toggleSubmenu('kontakt-submenu')">Kontakt Daten ändern</button>
+        <div id="kontakt-submenu" class="hidden submenu">
+            <button class="button" onclick="showContent('kontakt-option1')">Neue Emailadresse</button>
+            <button class="button" onclick="showContent('kontakt-option2')">Neue Handynummer</button>
+        </div>
+
+        <button class="button" onclick="toggleSubmenu('netclusiv-submenu')">Netclusiv (Postfächer)</button>
+        <div id="netclusiv-submenu" class="hidden submenu">
+            <button class="button" onclick="showContent('netclusiv-option1')">Neues Postfach</button>
+            <button class="button" onclick="showContent('netclusiv-option2')">Eintrag/Änderung (Verteiler)</button>
+            <button class="button" onclick="showContent('netclusiv-option3')">Probleme mit dem Postfach</button>
+        </div>
+    </div>
+
+    <!-- Inhalt für Alamos Optionen -->
+    <div id="alamos-option1" class="content-section hidden">
+        <h2 style="color: #FFF;">Alarmierung</h2>
+        <p style="color: #FFF;">Wenn kein fehler Angezeigt wird Fehler Nr. frei lassen</p>
+        <input type="text" id="nameField" placeholder="Namen" style="display: block; margin: 10px 0;">
+      <input type="text" id="nameField" placeholder="ja/nein" style="display: block; margin: 10px 0;">
+      <input type="text" id="nameField" placeholder="Fehler Nr. ****" style="display: block; margin: 10px 0;">
+        <button class="button" onclick="submitForm()">Senden</button>
+    </div>
+    <div id="alamos-option2" class="content-section hidden">
+        <h2 style="color: #FFF;">Funktionen</h2>
+        <p style="color: #FFF;">z.b. PA, TM, TF, ÖEL, GGZ, ZF etc.</p>
+      <input type="text" id="nameField" placeholder="Name" style="display: block; margin: 10px 0;">
+        <input type="text" id="functionField" placeholder="Neue Funktion" style="display: block; margin: 10px 0;">
+        <button class="button" onclick="submitFunctionForm()">Senden</button>
+    </div>
+    <div id="alamos-option3" class="content-section hidden">
+        <h2 style="color: #FFF;">Alarmgruppe</h2>
+        <p style="color: #FFF;">z.b. ELW,FB3,GGZ </p>
+      <input type="text" id="nameField" placeholder="Name" style="display: block; margin: 10px 0;">
+        <input type="text" id="groupField" placeholder="Neue Alarmgruppe" style="display: block; margin: 10px 0;">
+        <button class="button" onclick="submitGroupForm()">Senden</button>
+    </div>
+
+    <!-- Inhalt für Kontakt Optionen -->
+    <div id="kontakt-option1" class="content-section hidden">
+        <h2 style="color: #FFF;">Neue Emailadresse</h2>
+        <p style="color: #FFF;">Bitte geben Sie Ihre neue Emailadresse ein.</p>
+    <input type="text" id="nameField" placeholder="Name" style="display: block; margin: 10px 0;">
+        <input type="email" id="emailField" placeholder="Neue Emailadresse" style="display: block; margin: 10px 0;">
+        <button class="button" onclick="submitEmailForm()">Senden</button>
+    </div>
+    <div id="kontakt-option2" class="content-section hidden">
+        <h2 style="color: #FFF;">Neue Handynummer</h2>
+        <p style="color: #FFF;">Bitte geben Sie Ihre neue Handynummer ein.</p>
+      <input type="text" id="nameField" placeholder="Name" style="display: block; margin: 10px 0;">
+        <input type="tel" id="phoneField" placeholder="Neue Handynummer" style="display: block; margin: 10px 0;">
+        <button class="button" onclick="submitPhoneForm()">Senden</button>
+    </div>
+
+    <!-- Inhalt für Netclusiv Optionen -->
+    <div id="netclusiv-option1" class="content-section hidden">
+        <h2 style="color: #FFF;">Neues Postfach</h2>
+        <p style="color: #FFF;">Bitte geben Sie den Namen für das neue Postfach ein.</p>
+      <input type="text" id="nameField" placeholder="Name" style="display: block; margin: 10px 0;">
+        <input type="text" id="mailboxField" placeholder="Neues Postfach" style="display: block; margin: 10px 0;">
+        <button class="button" onclick="submitMailboxForm()">Senden</button>
+    </div>
+    <div id="netclusiv-option2" class="content-section hidden">
+        <h2 style="color: #FFF;">Verteiler Eintrag/Änderung
+        <p style="color: #FFF;">Bitte geben Sie die Änderungen für den Verteiler ein.</p>
+      <input type="text" id="nameField" placeholder="Name" style="display: block; margin: 10px 0;">
+        <input type="text" id="distributionField" placeholder="Eintrag/Änderung Verteiler" style="display: block; margin: 10px 0;">
+        <button class="button" onclick="submitDistributionForm()">Senden</button>
+    </div>
+    <div id="netclusiv-option3" class="content-section hidden">
+        <h2 style="color: #FFF;">Probleme mit dem Postfach</h2>
+        <p style="color: #FFF;">Bitte beschreiben Sie das Problem mit Ihrem Postfach.</p>
+      <input type="text" id="nameField" placeholder="Name" style="display: block; margin: 10px 0;">
+        <input type="text" id="problemField" placeholder="Postfach Problem" style="display: block; margin: 10px 0;">
+        <button class="button" onclick="submitProblemForm()">Senden</button>
+    </div>
+</body>
+</html>
